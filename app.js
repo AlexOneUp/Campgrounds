@@ -16,13 +16,17 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
+
 app.set('view engine', "ejs");
 app.set('views', path.join(__dirname, 'views'));
 
+
+// Landing page
 app.get('/', (req, res) => {
     res.render('home')
 });
 
+// Make camp ground site
 app.get('/makecampground', async (req, res) => {
     const camp = new Campground({title: 'My Backyard', description: "cheap camping"});
     await camp.save();

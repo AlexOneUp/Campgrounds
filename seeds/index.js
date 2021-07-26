@@ -36,4 +36,8 @@ const dbSeeder = async () => {
         await camp.save();
     }
 };
-dbSeeder();
+
+
+dbSeeder().then(() => {
+    mongoose.connection.close();
+});

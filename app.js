@@ -26,14 +26,26 @@ app.get('/', (req, res) => {
     res.render('home')
 });
 
-// Make camp ground site
-app.get('/makecampground', async (req, res) => {
-    const camp = new Campground({title: 'My Backyard', description: "cheap camping"});
-    await camp.save();
-    res.send(camp);
+/**
+ * CRUD functionality for campgrounds
+ */
+// Diplay all camp grounds
+app.get('/campgrounds', async (req, res) => {
+    // Find for all Campground models in our DB  
+    const campgrounds = await Campground.find({});
+    res.render('campgrounds/index', {campgrounds} );
 });
 
+// Look up corresponding campground in database
+// GET async function
+app.get('/campgrounds/:id', async (req, res) => {
+    // Find for all Campground models in our DB  
+    const campground = await Campground.findById(req.params.id); 
+    res.render('campgrounds/show', { campground });
+});
+
+
 const port = 3000;
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log("Serving port 3000")
 });

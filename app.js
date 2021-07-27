@@ -20,6 +20,8 @@ db.once("open", () => {
 app.set('view engine', "ejs");
 app.set('views', path.join(__dirname, 'views'));
 
+// Parse form body views/campgrounds/new.ejs
+app.use(express.urlencoded({ extended: true }));
 
 // Landing page
 app.get('/', (req, res) => {
@@ -34,6 +36,17 @@ app.get('/campgrounds', async (req, res) => {
     // Find for all Campground models in our DB  
     const campgrounds = await Campground.find({});
     res.render('campgrounds/index', {campgrounds} );
+});
+
+// GET form to POST new Campground
+app.get('/campgrounds/new', async (req, res) => {
+    res.render('campgrounds/new');
+});
+// POST new Campground from new.ejs form data onto database : campgrounds
+app.post('/campgrounds', async (req, res) => {
+    const newCampground = new Campground(req.body.campground);
+    await newCampground.save();
+    res.redirect(`/campgrounds/${newCampground._id}`);
 });
 
 // Look up corresponding campground in database

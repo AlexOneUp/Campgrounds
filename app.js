@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
+const ejsMate = require('ejs-mate')
 
 const methodOverride = require('method-override');
 
@@ -18,7 +19,7 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
-
+app.engine('ejs', ejsMate);
 app.set('view engine', "ejs");
 app.set('views', path.join(__dirname, 'views'));
 
@@ -39,7 +40,7 @@ app.get('/', (req, res) => {
 app.get('/campgrounds', async (req, res) => {
     // Find for all Campground models in our DB  
     const campgrounds = await Campground.find({});
-    res.render('campgrounds/index', {campgrounds} );
+    res.render('campgrounds/index', { campgrounds });
 });
 
 // GET form to POST new Campground
@@ -58,14 +59,14 @@ app.post('/campgrounds', async (req, res) => {
 // GET async function
 app.get('/campgrounds/:id', async (req, res) => {
     // Find for all Campground models in our DB  
-    const campground = await Campground.findById(req.params.id); 
+    const campground = await Campground.findById(req.params.id);
     res.render('campgrounds/show', { campground });
 });
 
 // Serves the form to be able to EDIT campgrounds
 app.get('/campgrounds/:id/edit', async (req, res) => {
     // Find for all Campground models in our DB  
-    const campground = await Campground.findById(req.params.id); 
+    const campground = await Campground.findById(req.params.id);
     res.render('campgrounds/edit', { campground });
 });
 
@@ -85,8 +86,13 @@ app.delete('/campgrounds/:id', async (req, res) => {
 
 });
 
+app.use((req, res) => {
+    res.status(404).send('404 NOT FOUND');
+});
 
 const port = 3000;
 app.listen(port, () => {
     console.log("Serving port 3000")
 });
+
+

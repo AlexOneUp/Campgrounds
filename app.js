@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate')
-
+const catchAsync = require('./utils/catchAsync');
 const methodOverride = require('method-override');
 
 const Campground = require('./models/campgrounds');
@@ -37,58 +37,61 @@ app.get('/', (req, res) => {
  * CRUD functionality for campgrounds
  */
 // Diplay all camp grounds
-app.get('/campgrounds', async (req, res) => {
+app.get('/campgrounds', catchAsync(async (req, res) => {
     // Find for all Campground models in our DB  
     const campgrounds = await Campground.find({});
     res.render('campgrounds/index', { campgrounds });
-});
+}));
 
 // GET form to POST new Campground
-app.get('/campgrounds/new', async (req, res) => {
+app.get('/campgrounds/new', catchAsync(async (req, res) => {
     res.render('campgrounds/new');
-});
+}));
 
 // POST new Campground from new.ejs form data onto database : campgrounds
-app.post('/campgrounds', async (req, res) => {
-    const newCampground = new Campground(req.body.campground);
-    await newCampground.save();
-    res.redirect(`/campgrounds/${newCampground._id}`);
-});
+app.post('/campgrounds', catchAsync(async (req, res, next) => {
+        const newCampground = new Campground(req.body.campground);
+        await newCampground.save();
+        res.redirect(`/campgrounds/${newCampground._id}`);
+    
+}))
 
 // Look up corresponding campground in database
 // GET async function
-app.get('/campgrounds/:id', async (req, res) => {
+app.get('/campgrounds/:id', catchAsync(async (req, res) => {
     // Find for all Campground models in our DB  
     const campground = await Campground.findById(req.params.id);
     res.render('campgrounds/show', { campground });
-});
+}));
 
 // Serves the form to be able to EDIT campgrounds
-app.get('/campgrounds/:id/edit', async (req, res) => {
+app.get('/campgrounds/:id/edit', catchAsync(async (req, res) => {
     // Find for all Campground models in our DB  
     const campground = await Campground.findById(req.params.id);
     res.render('campgrounds/edit', { campground });
-});
+}));
 
 // Update using methodOverride to update campgrounds by ID
-app.put('/campgrounds/:id', async (req, res) => {
+app.put('/campgrounds/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
     res.redirect(`/campgrounds/${campground._id}`);
 
-});
+}));
 
 
-app.delete('/campgrounds/:id', async (req, res) => {
+app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
     res.redirect('/campgrounds');
 
+}));
+
+// Catch all for any error
+app.use((err, req, res, next) => {
+    res.send("AN ERROR OCCURRED")
 });
 
-app.use((req, res) => {
-    res.status(404).send('404 NOT FOUND');
-});
 
 const port = 3000;
 app.listen(port, () => {

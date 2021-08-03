@@ -2,8 +2,10 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
-const ejsMate = require('ejs-mate')
+const ejsMate = require('ejs-mate');
 const catchAsync = require('./utils/catchAsync');
+const ExpressError = require('./utils/ExpressError');
+
 const methodOverride = require('method-override');
 
 const Campground = require('./models/campgrounds');
@@ -50,10 +52,11 @@ app.get('/campgrounds/new', catchAsync(async (req, res) => {
 
 // POST new Campground from new.ejs form data onto database : campgrounds
 app.post('/campgrounds', catchAsync(async (req, res, next) => {
-        const newCampground = new Campground(req.body.campground);
-        await newCampground.save();
-        res.redirect(`/campgrounds/${newCampground._id}`);
-    
+    if (!req.body.campground) throw new ExpressError('Invalid Campground Data', 400);
+    const newCampground = new Campground(req.body.campground);
+    await newCampground.save();
+    res.redirect(`/campgrounds/${newCampground._id}`);
+
 }))
 
 // Look up corresponding campground in database
@@ -87,9 +90,16 @@ app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
 
 }));
 
+// '*' means that for all paths
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404));
+})
+
 // Catch all for any error
 app.use((err, req, res, next) => {
-    res.send("AN ERROR OCCURRED")
+    const { statusCode = 500 } = err;
+    if(!err.message) err.message = "Something Went Wrong!"
+    res.status(statusCode).render('error', { err });
 });
 
 

@@ -4,7 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 
-const {campgroundSchema} = require('./validationSchemas');
+const { campgroundSchema, reviewSchema } = require('./validationSchemas');
 
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
@@ -12,6 +12,7 @@ const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 
 const Campground = require('./models/campgrounds');
+const Review = require('./models/review');
 
 mongoose.connect('mongodb://localhost:27017/campgrounds', {
     useNewUrlParser: true,
@@ -33,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 // for PUT, PATCH, DELETE routes
 app.use(methodOverride('_method'));
 
-// Validate Middleware
+// Validation Middleware to check if campground edits and posts are valid in the form Server-Side
 const validateCampground = (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
     if (error) {
@@ -43,6 +44,17 @@ const validateCampground = (req, res, next) => {
         next();
     }
 
+}
+
+// Validation Middleware to check if a review is valid in the form Server-Side
+const validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(element => element.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
 }
 
 // Landing page
@@ -80,7 +92,7 @@ app.post('/campgrounds', validateCampground, catchAsync(async (req, res, next) =
 // GET async function
 app.get('/campgrounds/:id', catchAsync(async (req, res) => {
     // Find for all Campground models in our DB  
-    const campground = await Campground.findById(req.params.id);
+    const campground = await Campground.findById(req.params.id).populate('reviews');
     res.render('campgrounds/show', { campground });
 }));
 
@@ -106,6 +118,23 @@ app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
     res.redirect('/campgrounds');
 
 }));
+
+app.post('/campgrounds/:id/reviews', validateReview, catchAsync(async (req, res) => {
+    const campground = await Campground.findById(req.params.id);
+    const review = new Review(req.body.review);
+    campground.reviews.push(review);
+    await review.save();
+    await campground.save();
+    res.redirect(`/campgrounds/${campground._id}`);
+}))
+
+app.delete('/campgrounds/:id/reviews/:reviewId', catchAsync(async (req, res, ) => {
+    const { id, reviewId } = req.params;
+    Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/campgrounds/${id}`)
+}))
+
 
 // '*' means that for all paths
 app.all('*', (req, res, next) => {

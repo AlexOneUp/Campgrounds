@@ -1,3 +1,9 @@
+const { campgroundSchema } = require('./validationSchemas');
+const { reviewSchema } = require('./validationSchemas');
+const ExpressError = require('./utils/ExpressError');
+const Campground = require('./models/campgrounds');
+
+
 module.exports.isLoggedIn = (req, res, next) => {
 
     if (!req.isAuthenticated()) {
@@ -8,4 +14,40 @@ module.exports.isLoggedIn = (req, res, next) => {
         return res.redirect('/login');
     }
     next();
+}
+// Validation Middleware to check if campground edits and posts are valid in the form Server-Side
+module.exports.validateCampground = (req, res, next) => {
+    const { error } = campgroundSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(element => element.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+
+}
+
+/**
+ *  This async function checks for 
+ *  if a user trying to do some action is the AUTHOR of this campground
+ */
+module.exports.isAuthor = async (req, res, next) => {
+    const { id } = req.params;
+    const campground = await Campground.findById(id);
+    if (!campground.author.equals(req.user._id)) {
+        req.flash('error', "You don't have permission to do this");
+        return res.redirect(`/campgrounds/${id}`);
+    }
+    next();
+}
+
+// Validation Middleware to check if a review is valid in the form Server-Side
+module.exports.validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(element => element.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
 }

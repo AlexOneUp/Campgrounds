@@ -32,6 +32,8 @@ const dbSeeder = async () => {
         const price = Math.floor(Math.random()*20) + 10;
 
         const camp = new Campground({
+            // Each instance of Campground will have a ref to author which is a ref to the Object ID in our db
+            author:'61134043c3331e50c61f3273',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             image: 'https://source.unsplash.com/collection/483251',

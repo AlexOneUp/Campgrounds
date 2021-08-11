@@ -40,6 +40,7 @@ router.get('/new', isLoggedIn, (req, res) => {
 // POST new Campground from new.ejs form data onto database : campgrounds
 router.post('/', isLoggedIn, validateCampground, catchAsync(async (req, res, next) => {
     const newCampground = new Campground(req.body.campground);
+    newCampground.author = req.user._id;
     await newCampground.save();
     req.flash('success', 'Successfully made a new campground!');
     res.redirect(`/campgrounds/${newCampground._id}`);
@@ -50,7 +51,8 @@ router.post('/', isLoggedIn, validateCampground, catchAsync(async (req, res, nex
 // GET async function
 router.get('/:id', catchAsync(async (req, res) => {
     // Find for all Campground models in our DB  
-    const campground = await Campground.findById(req.params.id).populate('reviews');
+    const campground = await Campground.findById(req.params.id).populate('reviews').populate('author');
+    console.log(campground);
     if (!campground) {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');

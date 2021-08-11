@@ -6,11 +6,15 @@ const ejsMate = require('ejs-mate');
 const flash = require('connect-flash');
 const session = require('express-session');
 const ExpressError = require('./utils/ExpressError');
-
 const methodOverride = require('method-override');
+const passport = require('passport');
+const LocalStrategy =require('passport-local');
+const User = require('./models/user');
 
-const campgrounds = require('./routes/campgroundRoutes');
-const reviews = require('./routes/reviewsRoutes');
+const userRoutes = require('./routes/users')
+const campgroundRoutes = require('./routes/campgroundRoutes');
+const reviewRoutes = require('./routes/reviewsRoutes');
+
 
 mongoose.connect('mongodb://localhost:27017/campgrounds', {
     useNewUrlParser: true,
@@ -51,6 +55,15 @@ app.use(session(sessionConfig));
 
 // Flash notification to client-side
 app.use(flash());
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 // Middleware makes this available to all templates
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
@@ -58,10 +71,12 @@ app.use((req, res, next) => {
     next();
 })
 
+
+app.use('/', userRoutes);
 // campgroundRoutes
-app.use('/campgrounds', campgrounds);
+app.use('/campgrounds', campgroundRoutes);
 // reviewsRoutes
-app.use('/campgrounds/:id/reviews', reviews);
+app.use('/campgrounds/:id/reviews', reviewRoutes);
 
 // Landing page
 app.get('/', (req, res) => {

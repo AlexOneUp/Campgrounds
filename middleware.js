@@ -2,6 +2,7 @@ const { campgroundSchema } = require('./validationSchemas');
 const { reviewSchema } = require('./validationSchemas');
 const ExpressError = require('./utils/ExpressError');
 const Campground = require('./models/campgrounds');
+const Review = require('./models/review');
 
 
 module.exports.isLoggedIn = (req, res, next) => {
@@ -50,4 +51,15 @@ module.exports.validateReview = (req, res, next) => {
     } else {
         next();
     }
+}
+
+// Validation Middleware to check if a review's author is the author in the DB
+module.exports.isReviewAuthor = async (req, res, next) => {
+    const { id, reviewId } = req.params;
+    const review = await Review.findById(reviewId);
+    if (!review.author.equals(req.user._id)) {
+        req.flash('error', "You don't have permission to do this");
+        return res.redirect(`/campgrounds/${id}`);
+    }
+    next();
 }

@@ -23,7 +23,7 @@ router.get('/new', isLoggedIn, campgroundsController.renderNewForm);
 router.route('/:id')
     .get(catchAsync(campgroundsController.showCampground))
     .put(isLoggedIn, isAuthor, validateCampground, catchAsync(campgroundsController.updateCampground))
-    .delete(isLoggedIn, catchAsync(campgroundsController.deleteCampground))
+    .delete(isLoggedIn,isAuthor, catchAsync(campgroundsController.deleteCampground))
 
 // Serves the form to be able to EDIT campgrounds
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(campgroundsController.renderEditForm));

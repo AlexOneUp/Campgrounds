@@ -15,7 +15,7 @@ router.route('/register')
     .post(authController.register)
 router.route('/login')
     .get(authController.renderLogin)
-    .post(authController.login)
+    .post(passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }),authController.login)
 router.get('/logout', authController.logout);
 
 module.exports = router;

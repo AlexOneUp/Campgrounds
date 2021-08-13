@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
+
+// Cloudinary storage for image files
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' })
+const { storage } = require('../cloudinary');
+const upload = multer({ storage })
 // Middleware error handler
 const catchAsync = require('../utils/catchAsync');
 
 const Campground = require('../models/campgrounds');
-// Joi schema
+// Joi schema middleware
 const { isLoggedIn, isAuthor, validateCampground } = require('../middleware');
 // Controller for MVC
 const campgroundsController = require('../controllers/campgroundsController');
@@ -19,7 +22,7 @@ const campgroundsController = require('../controllers/campgroundsController');
 router.route('/')
     .get(catchAsync(campgroundsController.index))
     // .post(isLoggedIn, validateCampground, catchAsync(campgroundsController.createCampground))
-    .post(upload.single('image'), (req, res) => {
+    .post(upload.array('image'), (req, res) => {
         console.log(req.body, req.files);
         res.send('it worked');
     })

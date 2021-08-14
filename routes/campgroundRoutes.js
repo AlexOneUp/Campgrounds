@@ -21,18 +21,14 @@ const campgroundsController = require('../controllers/campgroundsController');
  */
 router.route('/')
     .get(catchAsync(campgroundsController.index))
-    // .post(isLoggedIn, validateCampground, catchAsync(campgroundsController.createCampground))
-    .post(upload.array('image'), (req, res) => {
-        console.log(req.body, req.files);
-        res.send('it worked');
-    })
+    .post(isLoggedIn, upload.array('image'), validateCampground, catchAsync(campgroundsController.createCampground))
 
 // GET form to POST new Campground
 router.get('/new', isLoggedIn, campgroundsController.renderNewForm);
 
 router.route('/:id')
     .get(catchAsync(campgroundsController.showCampground))
-    .put(isLoggedIn, isAuthor, validateCampground, catchAsync(campgroundsController.updateCampground))
+    .put(isLoggedIn, isAuthor, upload.array('image'), validateCampground, catchAsync(campgroundsController.updateCampground))
     .delete(isLoggedIn, isAuthor, catchAsync(campgroundsController.deleteCampground))
 
 // Serves the form to be able to EDIT campgrounds

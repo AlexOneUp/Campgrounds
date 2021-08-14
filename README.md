@@ -1,6 +1,6 @@
 # Campgrounds
 Practice application with Mongo, Express, EJS, Node, with various other libraries.
-Learn and apply client+server side validation, deployment, usage of middleware, routers, authentication, etc.
+Learn and apply client+server side validation, deployment, usage of middleware, routers, authentication, data persistence in backend servers, etc.
 
 Udemy Course : 
 The Web Developer Bootcamp 2021 Final Project

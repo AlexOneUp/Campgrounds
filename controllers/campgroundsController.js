@@ -3,6 +3,10 @@ const Campground = require('../models/campgrounds');
 
 const { cloudinary } = require('../cloudinary/index');
 
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const geoCoder = mbxGeocoding({ accessToken: mapBoxToken });
+
 module.exports.index = async (req, res) => {
     const campgrounds = await Campground.find({});
     res.render('campgrounds/index', { campgrounds })
@@ -13,9 +17,14 @@ module.exports.renderNewForm = (req, res) => {
 }
 
 module.exports.createCampground = async (req, res, next) => {
+    const geoData = await geoCoder.forwardGeocode({
+        query: req.body.campground.location,
+        limit: 1
+    }).send();
 
     const campground = new Campground(req.body.campground);
-
+    // Saving GEOJSON with schema
+    campground.geometry = geoData.body.features[0].geometry;
     /**
      * Multer makes the array image : [{filename}] from campgrounds schema available
      * and makes the path for the URL to cloudinary available
@@ -75,7 +84,7 @@ module.exports.updateCampground = async (req, res) => {
      * Deleting images from backend (Mongo AND Cloudinary)
      */
     if (req.body.deleteImages) {
-        for(let filename of req.body.deleteImages){
+        for (let filename of req.body.deleteImages) {
             console.log(filename)
             await cloudinary.uploader.destroy(filename);
 

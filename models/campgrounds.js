@@ -7,9 +7,13 @@ const ImageSchema = new Schema({
     url: String,
     filename: String
 });
+
 ImageSchema.virtual('thumbnail').get(function () {
     return this.url.replace('/upload', '/upload/w_200');
 });
+
+const opts = { toJSON: { virtuals: true } };
+
 const CampgroundSchema = new Schema({
     title: String,
     images: [ImageSchema],
@@ -36,7 +40,17 @@ const CampgroundSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Review'
         }
-    ]
+    ],
+
+}, opts);
+
+// Section 553 @ 11:00 for explanation.
+// Gives information about a clustered point and returns a link to the campground id show page
+CampgroundSchema.virtual('properties.popUpMarkup').get(function () {
+    return `
+    <strong><a href="/campgrounds/${this._id}">${this.title}</a><strong>
+    <p>${this.description.substring(0,20)}...</p>
+    `;
 });
 
 // Query Middleware

@@ -26,7 +26,7 @@ const dbSeeder = async () => {
     await Campground.deleteMany({});
 
     let i = 0;
-    while (i < 50) {
+    while (i < 500) {
         i++;
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) + 10;

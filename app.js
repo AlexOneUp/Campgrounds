@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
@@ -12,8 +12,9 @@ const session = require('express-session');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const passport = require('passport');
-const LocalStrategy =require('passport-local');
+const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const helmet = require('helmet');
 
 const userRoutes = require('./routes/users')
 const campgroundRoutes = require('./routes/campgroundRoutes');
@@ -65,6 +66,9 @@ app.use(session(sessionConfig));
 
 // Flash notification to client-side
 app.use(flash());
+
+// Helmet Middleware
+app.use(helmet({ contentSecurityPolicy: false }));
 
 // Passport for authentication
 app.use(passport.initialize());

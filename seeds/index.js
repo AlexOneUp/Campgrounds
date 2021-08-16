@@ -23,7 +23,7 @@ db.once("open", () => {
 const sample = array => array[Math.floor(Math.random() * array.length)];
 const dbSeeder = async () => {
     // Delete all seeds to later repopulate the database
-    await Campground.deleteMany({});
+    // await Campground.deleteMany({});
 
     let i = 0;
     while (i < 500) {

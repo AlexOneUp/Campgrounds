@@ -19,6 +19,8 @@ const userRoutes = require('./routes/users')
 const campgroundRoutes = require('./routes/campgroundRoutes');
 const reviewRoutes = require('./routes/reviewsRoutes');
 
+const mongoSanitize = require('express-mongo-sanitize');
+
 
 mongoose.connect('mongodb://localhost:27017/campgrounds', {
     useNewUrlParser: true,
@@ -60,13 +62,15 @@ app.use(session(sessionConfig));
 // Flash notification to client-side
 app.use(flash());
 
-
+// Passport for authentication
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Sanitize mongo queries
+app.use(mongoSanitize());
 
 // Middleware makes this available to all templates
 app.use((req, res, next) => {

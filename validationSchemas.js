@@ -1,5 +1,15 @@
 const Joi = require('joi');
-const {number} = require('joi');
+const { number } = require('joi');
+
+const extenstion = (joi) => ({
+    type: 'String',
+    base: joi.string(),
+    messages: {
+        'string.escapeHTML': '{{#label}} must not include HTML!'
+    }
+})
+
+
 module.exports.campgroundSchema = Joi.object({
     campground: Joi.object({
         title: Joi.string().required(),
@@ -15,7 +25,7 @@ module.exports.campgroundSchema = Joi.object({
 module.exports.reviewSchema = Joi.object({
     review: Joi.object({
         rating: Joi.number().required().max(5).min(1),
-        body: Joi.string().required()
+        body: Joi.string().required().
     }).required()
 });
 

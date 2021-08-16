@@ -46,12 +46,16 @@ app.use(methodOverride('_method'));
 // look at public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Session cookies
 const sessionConfig = {
+    name: 'session',
     secret: 'notagoodsecret',
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
+        // Only turn on secure connections when deployed
+        // secure: true,
         // Date.now() counts milliseconds
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7

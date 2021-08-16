@@ -3,18 +3,17 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express');
-const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const flash = require('connect-flash');
-const session = require('express-session');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const helmet = require('helmet');
+const session = require('express-session');
 
 const userRoutes = require('./routes/users')
 const campgroundRoutes = require('./routes/campgroundRoutes');
@@ -22,8 +21,17 @@ const reviewRoutes = require('./routes/reviewsRoutes');
 
 const mongoSanitize = require('express-mongo-sanitize');
 
+/**
+ * Storing sessions using MongoDB and keeping sessions
+ * connect-mongo v4.4.1 is different from the lesson
+ * REVERTED TO connect-mongo@3.2.0
+ */
+// const { MongoStore } = require('connect-mongo');
+const MongoDBStore = require('connect-mongo')(session);
 
-mongoose.connect('mongodb://localhost:27017/campgrounds', {
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/campgrounds';
+
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -35,6 +43,7 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
+const app = express();
 app.engine('ejs', ejsMate);
 app.set('view engine', "ejs");
 app.set('views', path.join(__dirname, 'views'));
@@ -47,10 +56,31 @@ app.use(methodOverride('_method'));
 // look at public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Using Mongo to store sessions
+const secret = process.env.LOCAL_SECRET || 'notagoodsecret'
+
+/**
+ * Reference :
+ * https://www.udemy.com/course/the-web-developer-bootcamp/learn/lecture/22361206#questions/14175216
+ * for more details on connect-mongo v3.2.0
+ * Also, alternatively refer to the connect-mongo@3.2.0 docs here:
+ * https://www.npmjs.com/package/connect-mongo/v/3.2.0
+ */
+const store = new MongoDBStore({
+    url: dbUrl,
+    touchAfter: 24 * 60 * 60, //In seconds
+    secret,
+});
+store.on('error', function (err) {
+    console.log('Session Error Store', err)
+})
+
+
 // Session cookies
 const sessionConfig = {
+    store,
     name: 'session',
-    secret: 'notagoodsecret',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {

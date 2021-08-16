@@ -34,7 +34,7 @@ const dbSeeder = async () => {
         const camp = new Campground({
             // Each instance of Campground will have a ref to author which is a ref to the Object ID in our db
             // YOUR USER ID
-            author: '61134043c3331e50c61f3273',
+            author: '611aa88e8b7d8c61ff511d30',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. In consequatur, facilis eveniet quo aliquid cum illum minus ab officiis dolore, fugit eius, nulla cupiditate. Ratione eum deleniti nisi consequuntur cumque!',

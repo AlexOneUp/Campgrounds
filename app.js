@@ -29,7 +29,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 // const { MongoStore } = require('connect-mongo');
 const MongoDBStore = require('connect-mongo')(session);
 
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/campgrounds';
+const dbUrl =// process.env.DB_URL || 
+'mongodb://localhost:27017/campgrounds';
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -188,7 +189,8 @@ app.use((err, req, res, next) => {
 });
 
 
-const port = process.env.PORT || 3000;
+const port =// process.env.PORT || 
+3000;
 app.listen(port, () => {
     console.log(`Serving port ${port}`)
 });

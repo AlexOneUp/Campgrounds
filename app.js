@@ -30,7 +30,6 @@ const mongoSanitize = require('express-mongo-sanitize');
 const MongoDBStore = require('connect-mongo')(session);
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/campgrounds';
-
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -57,8 +56,7 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Using Mongo to store sessions
-const secret = process.env.LOCAL_SECRET || 'notagoodsecret'
-
+const secret = process.env.LOCAL_SECRET || 'developmentsecret';
 /**
  * Reference :
  * https://www.udemy.com/course/the-web-developer-bootcamp/learn/lecture/22361206#questions/14175216

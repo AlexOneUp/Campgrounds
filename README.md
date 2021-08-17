@@ -17,10 +17,15 @@ First Version Deployed
 - Bootstrap
 
 <b>Middleware :</b>
-- Express
-- Mongoose
-- Joi
-- Flash
+- Express ^4.17.1
+- Mongoose ^5.13.3
+- Joi ^17.4.2
+- Flash ^0.1.1
+- Multer
+- Passport
+- Sanitize HTML
+- 
+- 
 - 
 
 <b>Server-Side :</b>
@@ -31,7 +36,7 @@ First Version Deployed
 <b>Built with</b>
 - [EJS](https://https:ejs.co/)
 
-## Dependencies
+## Dependency List
 - "@mapbox/mapbox-sdk": "^0.13.1",
 - "cloudinary": "^1.26.3",
 - "connect-flash": "^0.1.1",
@@ -54,26 +59,20 @@ First Version Deployed
 - "passport-local-mongoose": "^6.1.0",
 - "sanitize-html": "^2.4.0
 
-
-## Code Example
-Show what the library does as concisely as possible, developers should be able to figure out **how** your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
-
 ## Installation
-Provide step by step series of examples and explanations about how to get a development env running.
+```
+$ npm i
+```
 
-## API Reference
 
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
 
-## Tests
-Describe and show how to run the tests with code examples.
-
-## How to use?
-If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project.
+## Usage
+On local machines, you can run :
+```
+$ node seeds/index.js
+```
+This will seed your database with 500 sample datasets with sample locations.
 
 ## Credits
 Credits to : Colt Steele and Colleagues in the Udemy Course : The Web Developer Bootcamp 2021 Final Project
 His repo can be found here : https://github.com/Colt/YelpCamp/
-
-
-## License

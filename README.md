@@ -51,7 +51,7 @@ Check package.json for full dependency list.
 
 ## Installation
 ```
-git clone https://github.com/AlexOneUp/Campgrounds
+$ git clone https://github.com/AlexOneUp/Campgrounds
 ```
 into your desired folder, then install node package manager and run : 
 ```

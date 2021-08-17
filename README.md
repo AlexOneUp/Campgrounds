@@ -33,7 +33,6 @@ First Version Deployed
 - Passport Local ^1.0.0
 - Passport Local Mongoose ^6.1.0
 - Sanitize HTML ^2.4.0
-- 
 
 <b>Server-Side :</b>
 - MapBox ^0.13.1

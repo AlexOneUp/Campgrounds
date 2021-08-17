@@ -1,5 +1,5 @@
 
-<h1 align="center">Welcome to the Campgrounds Project</h1>
+<h1 align="center">Campgrounds Project</h1>
 <p align="center">Site is live here :
 https://mysterious-mountain-02142.herokuapp.com/
 </p>

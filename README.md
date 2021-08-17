@@ -6,7 +6,7 @@ https://mysterious-mountain-02142.herokuapp.com/
 
 ## Motivation
 An educational application using Mongo, Express, EJS, Node, with various other libraries.
-Throught this, I learned and applied client+server side validation, deployment, usage of middleware, routers, authentication, deletion in backend servers and other endpoints, mapping objects from api endpoints, etc.
+Throught this, I learned and applied client+server side validation, deployment, usage of middleware, routers, authentication, authorization, usage of hash algorithms deletion in backend servers and other endpoints, mapping objects from api endpoints, etc.
 
 ## Build status
 First Version Deployed

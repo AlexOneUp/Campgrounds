@@ -13,51 +13,42 @@ First Version Deployed
 
 ## Tech/framework used
 <b>Client Side :</b> 
-- EJS
-- Bootstrap
+- Bootstrap ^5.1.0
+- EJS ^3.1.6
+- EJS Mate ^3.0.0
 
 <b>Middleware :</b>
 - Express ^4.17.1
-- Mongoose ^5.13.3
-- Joi ^17.4.2
+- Express Mongo Sanitize ^2.1.0
+- Express Session ^1.17.1
 - Flash ^0.1.1
-- Multer
-- Passport
-- Sanitize HTML
-- 
-- 
+- Helmet ^4.6.0
+- Joi ^17.4.2
+- Method Override ^3.0.0
+- Mongoose ^5.13.3
+- Morgan ^1.10.0
+- Multer ^1.4.3
+- Multer Storage Cloudinary ^4.0.0
+- Passport ^0.4.1
+- Passport Local ^1.0.0
+- Passport Local Mongoose ^6.1.0
+- Sanitize HTML ^2.4.0
 - 
 
 <b>Server-Side :</b>
-- MapBox
-- Mongo Atlas
-- Cloudinary
+- MapBox ^0.13.1
+- Mongo Atlas 
+- Cloudinary ^1.26.3
+
+<b>Deployment Technology :</b>
+- Heroku
+- dotenv ^10.0.0
 
 <b>Built with</b>
 - [EJS](https://https:ejs.co/)
 
 ## Dependency List
-- "@mapbox/mapbox-sdk": "^0.13.1",
-- "cloudinary": "^1.26.3",
-- "connect-flash": "^0.1.1",
-- "connect-mongo": "^3.2.0",
-- "dotenv": "^10.0.0",
-- "ejs": "^3.1.6",
-- "ejs-mate": "^3.0.0",
-- "express": "^4.17.1",
-- "express-mongo-sanitize": "^2.1.0",
-- "express-session": "^1.17.2",
-- "helmet": "^4.6.0",
-- "joi": "^17.4.2",
-- "method-override": "^3.0.0",
-- "mongoose": "^5.13.3",
-- "morgan": "^1.10.0",
-- "multer": "^1.4.3",
-- "multer-storage-cloudinary": "^4.0.0",
-- "passport": "^0.4.1",
-- "passport-local": "^1.0.0",
-- "passport-local-mongoose": "^6.1.0",
-- "sanitize-html": "^2.4.0
+Check package.json for full dependency list. 
 
 ## Installation
 ```

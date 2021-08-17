@@ -61,6 +61,10 @@ First Version Deployed
 
 ## Installation
 ```
+git clone https://github.com/AlexOneUp/Campgrounds
+```
+into your desired folder, then install node package manager and run : 
+```
 $ npm i
 ```
 

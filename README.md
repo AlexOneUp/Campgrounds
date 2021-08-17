@@ -11,14 +11,6 @@ Throught this, I learned and applied client+server side validation, deployment, 
 ## Build status
 First Version Deployed
 
-[![Build Status](https://mysterious-mountain-02142.herokuapp.com/)](https://mysterious-mountain-02142.herokuapp.com/)
-
-## Code style
-If you're using any code style like xo, standard etc. That will help others while contributing to your project. Ex. -
-
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
- 
-
 ## Tech/framework used
 <b>Client Side :</b> 
 - EJS
@@ -28,15 +20,39 @@ If you're using any code style like xo, standard etc. That will help others whil
 - Express
 - Mongoose
 - Joi
+- Flash
+- 
 
 <b>Server-Side :</b>
 - MapBox
 - Mongo Atlas
+- Cloudinary
 
 <b>Built with</b>
 - [EJS](https://https:ejs.co/)
 
-## Features
+## Dependencies
+- "@mapbox/mapbox-sdk": "^0.13.1",
+- "cloudinary": "^1.26.3",
+- "connect-flash": "^0.1.1",
+- "connect-mongo": "^3.2.0",
+- "dotenv": "^10.0.0",
+- "ejs": "^3.1.6",
+- "ejs-mate": "^3.0.0",
+- "express": "^4.17.1",
+- "express-mongo-sanitize": "^2.1.0",
+- "express-session": "^1.17.2",
+- "helmet": "^4.6.0",
+- "joi": "^17.4.2",
+- "method-override": "^3.0.0",
+- "mongoose": "^5.13.3",
+- "morgan": "^1.10.0",
+- "multer": "^1.4.3",
+- "multer-storage-cloudinary": "^4.0.0",
+- "passport": "^0.4.1",
+- "passport-local": "^1.0.0",
+- "passport-local-mongoose": "^6.1.0",
+- "sanitize-html": "^2.4.0
 
 
 ## Code Example

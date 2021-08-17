@@ -1,35 +1,43 @@
 
-## Project title
 <h1 align="center">Welcome to the Campgrounds Project</h1>
-Site is live here :
+<p align="center">Site is live here :
 https://mysterious-mountain-02142.herokuapp.com/
+</p>
 
 ## Motivation
 An educational application using Mongo, Express, EJS, Node, with various other libraries.
 Throught this, I learned and applied client+server side validation, deployment, usage of middleware, routers, authentication, deletion in backend servers and other endpoints, mapping objects from api endpoints, etc.
 
 ## Build status
-Build status of continus integration i.e. travis, appveyor etc. Ex. - 
+First Version Deployed
 
-[![Build Status](https://travis-ci.org/akashnimare/foco.svg?branch=master)](https://travis-ci.org/akashnimare/foco)
-[![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/akashnimare/foco?branch=master&svg=true)](https://ci.appveyor.com/project/akashnimare/foco/branch/master)
+[![Build Status](https://mysterious-mountain-02142.herokuapp.com/)](https://mysterious-mountain-02142.herokuapp.com/)
 
 ## Code style
 If you're using any code style like xo, standard etc. That will help others while contributing to your project. Ex. -
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
  
-## Screenshots
-Include logo/demo screenshot etc.
 
 ## Tech/framework used
-Ex. -
+<b>Client Side :</b> 
+- EJS
+- Bootstrap
+
+<b>Middleware :</b>
+- Express
+- Mongoose
+- Joi
+
+<b>Server-Side :</b>
+- MapBox
+- Mongo Atlas
 
 <b>Built with</b>
-- [Electron](https://electron.atom.io)
+- [EJS](https://https:ejs.co/)
 
 ## Features
-What makes your project stand out?
+
 
 ## Code Example
 Show what the library does as concisely as possible, developers should be able to figure out **how** your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.

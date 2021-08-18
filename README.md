@@ -18,6 +18,7 @@ First Version Deployed
 - EJS Mate ^3.0.0
 
 <b>Middleware :</b>
+- BCrypt ^5.0.1
 - Express ^4.17.1
 - Express Mongo Sanitize ^2.1.0
 - Express Session ^1.17.1

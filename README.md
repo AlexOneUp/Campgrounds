@@ -11,6 +11,9 @@ Throught this, I learned and applied client+server side validation, deployment, 
 ## Build status
 First Version Deployed
 
+![Progress](https://progress-bar.dev/100/?title=done)
+
+
 ## Tech/framework used
 <b>Client Side :</b> 
 - Bootstrap ^5.1.0
